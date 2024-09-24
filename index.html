@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medieval Quest</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+        .event-box {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="event-box">
+        <h2>Medieval Quest Event</h2>
+        <p id="quest-text">The quest begins! You stand at the gates of the city...</p>
+        <button onclick="handleChoice('Explore the city')">Explore the city</button>
+        <button onclick="handleChoice('Attack the guards')">Attack the guards</button>
+    </div>
+
+    <script>
+        async function handleChoice(choice) {
+            const response = await fetch('/api/quest', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ choice: choice })
+            });
+
+            const data = await response.json();
+            document.getElementById('quest-text').textContent = data.newEvent;
+        }
+    </script>
+</body>
+</html>
